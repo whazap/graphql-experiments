@@ -1,18 +1,24 @@
 
 const {
     graphql,
-    buildSchema,
+    printSchema,
+    GraphQLSchema,
+    GraphQLObjectType,
+    GraphQLString,
 } = require('graphql');
 
-const schema = buildSchema(`
-    type Query {
-        foo: String
-    }
-
-    type Schema {
-        query: Query
-    }
-`);
+const schema = new GraphQLSchema({
+    query: new GraphQLObjectType({
+        name: 'Query',
+        description: 'desc',
+        fields: () => ({
+            foo: {
+                type: GraphQLString,
+                description: 'foo description',
+            },
+        }),
+    }),
+});
 
 const query = `
     {
@@ -23,6 +29,8 @@ const query = `
 const resolvers = {
     foo: () => 'bar',
 };
+
+//console.log('schema', printSchema(schema));
 
 graphql(schema, query, resolvers)
     .then(result => console.log('result', result))

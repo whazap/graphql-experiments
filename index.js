@@ -1,36 +1,33 @@
 
 const {
     graphql,
-    printSchema,
-    GraphQLSchema,
-    GraphQLObjectType,
-    GraphQLString,
+    buildSchema,
 } = require('graphql');
 
-const schema = new GraphQLSchema({
-    query: new GraphQLObjectType({
-        name: 'Query',
-        description: 'desc',
-        fields: () => ({
-            foo: {
-                type: GraphQLString,
-                description: 'foo description',
-            },
-        }),
-    }),
-});
+const schema = buildSchema(`
+    type Query {
+        id: ID
+        name: String
+        age: Int,
+        isAdmin: Boolean
+    }
+`);
 
 const query = `
     {
-        foo
+        id,
+        name,
+        age,
+        isAdmin
     }
 `;
 
 const resolvers = {
-    foo: () => 'bar',
+    id: () => '1',
+    name: () => 'whazap',
+    age: () => 35,
+    isAdmin: () => true,
 };
-
-//console.log('schema', printSchema(schema));
 
 graphql(schema, query, resolvers)
     .then(result => console.log('result', result))

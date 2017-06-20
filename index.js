@@ -13,13 +13,14 @@ const schema = buildSchema(`
     }
 
     type Query {
-        user: User
+        user: User,
+        users: [User]
     }
 `);
 
 const query = `
     {
-        user {
+        users {
             id,
             name,
             age,
@@ -28,13 +29,29 @@ const query = `
     }
 `;
 
+const users = [
+    {
+        id: '1',
+        name: 'whazap',
+        age: 35,
+        isAdmin: true,
+    },
+    {
+        id: '2',
+        name: 'wh4z4p',
+        age: 20,
+        isAdmin: false,
+    },
+];
+
 const resolvers = {
     user: () => ({
         id: '1',
         name: 'whazap',
         age: 35,
         isAdmin: true,
-    })
+    }),
+    users: () => users,
 };
 
 graphql(schema, query, resolvers)

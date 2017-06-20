@@ -1,8 +1,12 @@
 
+const express = require('express');
 const {
     graphql,
     buildSchema,
 } = require('graphql');
+
+const PORT = process.env.PORT || 3000;
+const server = express();
 
 const schema = buildSchema(`
     type User {
@@ -54,6 +58,12 @@ const resolvers = {
     users: () => users,
 };
 
-graphql(schema, query, resolvers)
-    .then(result => console.log('result', result))
-    .catch(error => console.log('error', error));
+server.get('/graphql', (req, res) => {
+    graphql(schema, query, resolvers)
+        .then(result => res.send(JSON.stringify(result)))
+        .catch(error => res.status(500).send(JSON.stringify(error)));
+});
+
+server.listen(PORT, function () {
+    console.log(`Listening on http://localhost:${PORT}`);
+});

@@ -5,6 +5,7 @@ const {
     graphql,
     GraphQLSchema,
     GraphQLObjectType,
+    GraphQLNonNull,
     GraphQLID,
     GraphQLString,
     GraphQLInt,
@@ -72,7 +73,7 @@ const schema = new GraphQLSchema({
                 description: 'user descr',
                 args: {
                     id: {
-                        type: GraphQLID,
+                        type: new GraphQLNonNull(GraphQLID),
                     },
                 },
                 resolve: (_, args) => getUserById(args.id),

@@ -5,28 +5,36 @@ const {
 } = require('graphql');
 
 const schema = buildSchema(`
-    type Query {
+    type User {
         id: ID
         name: String
         age: Int,
         isAdmin: Boolean
     }
+
+    type Query {
+        user: User
+    }
 `);
 
 const query = `
     {
-        id,
-        name,
-        age,
-        isAdmin
+        user {
+            id,
+            name,
+            age,
+            isAdmin
+        }
     }
 `;
 
 const resolvers = {
-    id: () => '1',
-    name: () => 'whazap',
-    age: () => 35,
-    isAdmin: () => true,
+    user: () => ({
+        id: '1',
+        name: 'whazap',
+        age: 35,
+        isAdmin: true,
+    })
 };
 
 graphql(schema, query, resolvers)

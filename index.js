@@ -14,6 +14,32 @@ const {
 const PORT = process.env.PORT || 3000;
 const server = express();
 
+const users = [
+    {
+        id: 'abc',
+        name: 'whazap',
+        age: 35,
+        isAdmin: true,
+    },
+    {
+        id: 'xyz',
+        name: 'wh4z4p',
+        age: 20,
+        isAdmin: false,
+    },
+];
+
+const getUserById = (id) =>
+    new Promise((resolve, reject) => {
+        const user = users.filter(user => user.id === id);
+
+        if (!user.length) {
+            reject('no user found');
+        }
+
+        resolve(user[0]);
+    });
+
 const User = new GraphQLObjectType({
     name: 'User',
     fields: () => ({
@@ -44,12 +70,12 @@ const schema = new GraphQLSchema({
             user: {
                 type: User,
                 description: 'user descr',
-                resolve: () => new Promise(resolve => resolve({
-                    id: 'abc',
-                    name: 'whazap',
-                    age: 35,
-                    isAdmin: true,
-                })),
+                args: {
+                    id: {
+                        type: GraphQLID,
+                    },
+                },
+                resolve: (_, args) => getUserById(args.id),
             },
         }),
     }),

@@ -1,0 +1,15 @@
+{
+  "name": "graphql-tutorial",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sebastian Herber <herber@zaplab.at> (http://www.zaplab.at)",
+  "license": "ISC",
+  "dependencies": {
+    "graphql": "^0.10.2"
+  }
+}

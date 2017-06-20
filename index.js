@@ -1,5 +1,6 @@
 
 const express = require('express');
+const graphqlHTTP = require('express-graphql');
 const {
     graphql,
     buildSchema,
@@ -21,17 +22,6 @@ const schema = buildSchema(`
         users: [User]
     }
 `);
-
-const query = `
-    {
-        users {
-            id,
-            name,
-            age,
-            isAdmin
-        }
-    }
-`;
 
 const users = [
     {
@@ -58,11 +48,11 @@ const resolvers = {
     users: () => users,
 };
 
-server.get('/graphql', (req, res) => {
-    graphql(schema, query, resolvers)
-        .then(result => res.send(JSON.stringify(result)))
-        .catch(error => res.status(500).send(JSON.stringify(error)));
-});
+server.use('/graphql', graphqlHTTP({
+    schema,
+    graphiql: true,
+    rootValue: resolvers,
+}));
 
 server.listen(PORT, function () {
     console.log(`Listening on http://localhost:${PORT}`);

@@ -9,7 +9,8 @@ const {
     GraphQLID,
     GraphQLString,
     GraphQLInt,
-    GraphQLBoolean
+    GraphQLBoolean,
+    GraphQLList,
 } = require('graphql');
 
 const PORT = process.env.PORT || 3000;
@@ -40,6 +41,10 @@ const getUserById = (id) =>
 
         resolve(user[0]);
     });
+
+const getUsers = () =>
+    new Promise(resolve => resolve(users));
+
 
 const User = new GraphQLObjectType({
     name: 'User',
@@ -78,6 +83,10 @@ const schema = new GraphQLSchema({
                 },
                 resolve: (_, args) => getUserById(args.id),
             },
+            users: {
+                type: new GraphQLList(User),
+                resolve: () => getUsers(),
+            }
         }),
     }),
 });

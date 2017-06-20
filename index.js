@@ -13,94 +13,43 @@ const {
     GraphQLList,
 } = require('graphql');
 const uuid = require('node-uuid');
+const fetch = require('node-fetch');
 
 const PORT = process.env.PORT || 3000;
 const server = express();
 
-const users = [
-    {
-        id: 'abc',
-        name: 'whazap',
-        age: 35,
-        isAdmin: true,
-    },
-    {
-        id: 'xyz',
-        name: 'wh4z4p',
-        age: 20,
-        isAdmin: false,
-    },
-];
-
-const getUserById = (id) =>
-    new Promise((resolve, reject) => {
-        const user = users.filter(user => user.id === id);
-
-        if (!user.length) {
-            reject('no user found');
-        }
-
-        resolve(user[0]);
-    });
-
-const getUsers = () =>
-    new Promise(resolve => resolve(users));
-
-const createUser = ({ name, age, isAdmin = false}) => {
-    const user = {
-        id: uuid(),
-        name,
-        age,
-        isAdmin
-    };
-
-    users.push(user);
-
-    return user;
-};
+const getUserByName = (name) =>
+    fetch(`https://api.smashcast.tv/user/${name}`)
+        .then(resp => resp.json());
 
 const User = new GraphQLObjectType({
     name: 'User',
     fields: () => ({
         id: {
-            type: GraphQLID,
-            description: 'Unique ID',
+            type: GraphQLInt, // !! transforms string to number
+            resolve: user => user.user_id,
         },
         name: {
             type: GraphQLString,
-            description: 'Username',
+            resolve: user => user.user_name,
         },
-        age: {
-            type: GraphQLInt,
-            description: 'Age of user',
+        isLive: {
+            type: GraphQLBoolean, // !! transforms string to bool
+            resolve: user => user.is_live,
         },
-        isAdmin: {
-            type: GraphQLBoolean,
-            description: 'If user got admin rights',
+        followers: {
+            type: GraphQLInt, // !! transforms string to bool
         },
-    }),
-});
+        cover: {
+            type: GraphQLString,
+            resolve: user => user.user_cover,
+        },
+        logo: {
+            type: GraphQLString,
+            resolve: user => user.user_logo,
+        },
 
-const mutationType = new GraphQLObjectType({
-    name: 'Mutation',
-    description: 'The root Mutation type',
-    fields: {
-        createUser: {
-            type: User,
-            args: {
-                name: {
-                    type: new GraphQLNonNull(GraphQLString),
-                },
-                age: {
-                    type: new GraphQLNonNull(GraphQLInt),
-                },
-                isAdmin: {
-                    type: GraphQLBoolean,
-                },
-            },
-            resolve: (_, args) => createUser(args),
-        }
-    },
+    }),
 });
 
 const schema = new GraphQLSchema({
@@ -112,19 +61,14 @@ const schema = new GraphQLSchema({
                 type: User,
                 description: 'user descr',
                 args: {
-                    id: {
-                        type: new GraphQLNonNull(GraphQLID),
+                    name: {
+                        type: new GraphQLNonNull(GraphQLString),
                     },
                 },
-                resolve: (_, args) => getUserById(args.id),
+                resolve: (_, args) => getUserByName(args.name),
             },
-            users: {
-                type: new GraphQLList(User),
-                resolve: () => getUsers(),
-            }
         }),
     }),
-    mutation: mutationType,
 });
 
 server.use('/graphql', graphqlHTTP({
@@ -138,13 +82,14 @@ server.listen(PORT, function () {
 
 /*
 
-mutation {
-    createUser(name:"new user", age: 33) {
-        id,
-        name,
-        age,
-        isAdmin
-    }
+query {
+  user(name: "wh4z4p") {
+    id,
+    name,
+    isLive,
+    logo,
+    cover,
+  }
 }
 
 */

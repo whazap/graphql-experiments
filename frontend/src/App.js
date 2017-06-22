@@ -4,20 +4,29 @@ import { gql, graphql } from 'react-apollo';
 import MediaList from './MediaList';
 import './App.css';
 
-const MediaListWithData = graphql(gql`
-    query {
-        medias {
-            status,
-            thumbnail
-        }
-    }
-`)(MediaList);
-
 class App extends Component {
   render() {
     return (
       <div className="App">
-          <MediaListWithData />
+          <MediaList
+              data={{
+                  loading: false,
+                  medias: [
+                      {
+                          status: '1',
+                          thumbnail: '/static/img/media/live/sscaitournament_mid_000.jpg',
+                      },
+                      {
+                          status: '2',
+                          thumbnail: '/static/img/media/live/sscaitournament_mid_000.jpg',
+                      },
+                      {
+                          status: '3',
+                          thumbnail: '/static/img/media/live/sscaitournament_mid_000.jpg',
+                      },
+                  ],
+              }}
+          />
       </div>
     );
   }

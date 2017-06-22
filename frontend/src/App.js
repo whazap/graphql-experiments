@@ -7,7 +7,7 @@ import './App.css';
 const MediaListWithData1 = graphql(gql`
     query {
         medias(limit: 1) {
-            status,
+            title:status,
             thumbnail
         }
     }
@@ -16,7 +16,7 @@ const MediaListWithData1 = graphql(gql`
 const MediaListWithData2 = graphql(gql`
     query {
         medias(limit: 2) {
-            status,
+            title:status,
             thumbnail
         }
     }
@@ -25,7 +25,7 @@ const MediaListWithData2 = graphql(gql`
 const MediaListWithData3 = graphql(gql`
     query {
         medias(limit: 3) {
-            status,
+            title:status,
             thumbnail
         }
     }
@@ -34,7 +34,7 @@ const MediaListWithData3 = graphql(gql`
 const MediaListWithData4 = graphql(gql`
     query {
         medias(limit: 4) {
-            status,
+            title:status,
             thumbnail
         }
     }

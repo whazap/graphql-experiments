@@ -32,7 +32,7 @@ const MediaList = ({ data = defaultData }) => {
                     className="media-list__item"
                 >
                     <MediaItem
-                        title={user.status}
+                        title={user.title}
                         thumbnail={`https://edge.sf.hitbox.tv${user.thumbnail}`}
                     />
                 </li>

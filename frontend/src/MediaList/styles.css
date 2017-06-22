@@ -1,0 +1,13 @@
+
+.media-list {
+    display: block;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+}
+
+.media-list__item {
+    display: inline-block;
+    padding: 0 20px 20px 0;
+    width: 25%;
+}

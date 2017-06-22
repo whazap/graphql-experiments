@@ -1,5 +1,6 @@
 
 const express = require('express');
+const cors = require('cors');
 const graphqlHTTP = require('express-graphql');
 const {
     graphql,
@@ -15,40 +16,33 @@ const {
 const uuid = require('node-uuid');
 const fetch = require('node-fetch');
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 const server = express();
 
-const getUserByName = (name) =>
-    fetch(`https://api.smashcast.tv/user/${name}`)
-        .then(resp => resp.json());
+const getMedias = (limit = 10) =>
+    fetch(`https://www.smashcast.tv/api/media/live/list?fast=true&limit=${limit}`)
+        .then(resp => resp.json())
+        .then(json => console.log('medias', json.livestream) || json.livestream);
 
-const User = new GraphQLObjectType({
-    name: 'User',
+const Media = new GraphQLObjectType({
+    name: 'Media',
     fields: () => ({
         id: {
-            type: GraphQLInt, // !! transforms string to number
-            resolve: user => user.user_id,
+            type: GraphQLInt,
+            resolve: media => media.media_id,
         },
         name: {
             type: GraphQLString,
-            resolve: user => user.user_name,
+            resolve: media => media.media_name,
         },
-        isLive: {
-            type: GraphQLBoolean, // !! transforms string to bool
-            resolve: user => user.is_live,
-        },
-        followers: {
-            type: GraphQLInt, // !! transforms string to bool
-        },
-        cover: {
+        status: {
             type: GraphQLString,
-            resolve: user => user.user_cover,
+            resolve: media => media.media_status,
         },
-        logo: {
+        thumbnail: {
             type: GraphQLString,
-            resolve: user => user.user_logo,
+            resolve: media => media.media_thumbnail,
         },
-
     }),
 });
 
@@ -57,20 +51,33 @@ const schema = new GraphQLSchema({
         name: 'Query',
         description: 'desc',
         fields: () => ({
-            user: {
-                type: User,
-                description: 'user descr',
+            media: {
+                type: Media,
+                description: 'media descr',
+            },
+            medias: {
+                type: new GraphQLList(Media),
+                description: 'medias descr',
                 args: {
-                    name: {
-                        type: new GraphQLNonNull(GraphQLString),
+                    limit: {
+                        type: GraphQLInt,
                     },
                 },
-                resolve: (_, args) => getUserByName(args.name),
+                resolve: (_, args) => getMedias(args.limit),
             },
         }),
     }),
 });
 
+server.use('/graphql', function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+    if (req.method === 'OPTIONS') {
+        res.sendStatus(200);
+    } else {
+        next();
+    }
+});
 server.use('/graphql', graphqlHTTP({
     schema,
     graphiql: true,
@@ -79,17 +86,3 @@ server.use('/graphql', graphqlHTTP({
 server.listen(PORT, function () {
     console.log(`Listening on http://localhost:${PORT}`);
 });
-
-/*
-
-query {
-  user(name: "wh4z4p") {
-    id,
-    name,
-    isLive,
-    logo,
-    cover,
-  }
-}
-
-*/

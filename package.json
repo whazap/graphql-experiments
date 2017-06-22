@@ -10,10 +10,12 @@
   "author": "Sebastian Herber <herber@zaplab.at> (http://www.zaplab.at)",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.3",
     "express": "^4.15.3",
     "express-graphql": "^0.6.6",
     "graphql": "^0.10.2",
     "node-fetch": "^1.7.1",
-    "node-uuid": "^1.4.8"
+    "node-uuid": "^1.4.8",
+    "normalize.css": "^7.0.0"
   }
 }

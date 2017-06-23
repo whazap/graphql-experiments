@@ -4,53 +4,32 @@ import { gql, graphql } from 'react-apollo';
 import MediaList from './MediaList';
 import './App.css';
 
-const MediaListWithData1 = graphql(gql`
-    query {
-        medias(limit: 1) {
+const MediaListWithData = graphql(gql`
+    query($limit: Int) {
+        medias(limit: $limit) {
             title:status,
             thumbnail
         }
     }
-`)(MediaList);
-
-const MediaListWithData2 = graphql(gql`
-    query {
-        medias(limit: 2) {
-            title:status,
-            thumbnail
-        }
-    }
-`)(MediaList);
-
-const MediaListWithData3 = graphql(gql`
-    query {
-        medias(limit: 3) {
-            title:status,
-            thumbnail
-        }
-    }
-`)(MediaList);
-
-const MediaListWithData4 = graphql(gql`
-    query {
-        medias(limit: 4) {
-            title:status,
-            thumbnail
-        }
-    }
-`)(MediaList);
+`, {
+    options: (props) => ({
+        variables: {
+            limit: props.limit,
+        },
+    }),
+})(MediaList);
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-          <MediaListWithData1 />
-          <MediaListWithData2 />
-          <MediaListWithData3 />
-          <MediaListWithData4 />
-      </div>
-    );
-  }
+    render() {
+        return (
+            <div className="App">
+                <MediaListWithData limit="1" />
+                <MediaListWithData limit="2" />
+                <MediaListWithData limit="3" />
+                <MediaListWithData limit="4" />
+            </div>
+        );
+    }
 }
 
 export default App;

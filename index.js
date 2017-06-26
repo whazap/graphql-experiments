@@ -6,11 +6,8 @@ const {
     graphql,
     GraphQLSchema,
     GraphQLObjectType,
-    GraphQLNonNull,
-    GraphQLID,
     GraphQLString,
     GraphQLInt,
-    GraphQLBoolean,
     GraphQLList,
 } = require('graphql');
 const uuid = require('node-uuid');
@@ -22,7 +19,7 @@ const server = express();
 const getMedias = (limit = 10) =>
     fetch(`https://www.smashcast.tv/api/media/live/list?fast=true&limit=${limit}`)
         .then(resp => resp.json())
-        .then(json => console.log('medias', json.livestream) || json.livestream);
+        .then(json => json.livestream);
 
 const Media = new GraphQLObjectType({
     name: 'Media',

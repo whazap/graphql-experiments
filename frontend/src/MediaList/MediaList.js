@@ -4,13 +4,7 @@ import PropTypes from 'prop-types';
 import MediaItem from './MediaItem';
 import './styles.css';
 
-const defaultData = {
-    loading: true,
-    error: null,
-    medias: [],
-};
-
-const MediaList = ({ data = defaultData }) => {
+const MediaList = ({ data }) => {
     if (data.loading) {
         return (
             <div>Loading</div>
@@ -51,6 +45,13 @@ MediaList.propTypes = {
             }),
         ),
     }),
+};
+MediaList.defaultProps = {
+    data: {
+        loading: true,
+        error: null,
+        medias: [],
+    },
 };
 
 export default MediaList;

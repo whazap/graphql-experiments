@@ -19,9 +19,9 @@ const MediaList = ({ data }) => {
 
     return (
         <ul className="media-list">
-            {data.medias.map((user, i) => (
+            {data.medias.map(user => (
                 <li
-                    key={i}
+                    key={user.id}
                     className="media-list__item"
                 >
                     <MediaItem

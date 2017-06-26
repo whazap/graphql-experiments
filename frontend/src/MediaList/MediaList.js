@@ -44,10 +44,12 @@ MediaList.propTypes = {
     data: PropTypes.shape({
         loading: PropTypes.bool,
         error: PropTypes.string,
-        medias: PropTypes.shape({
-            title: PropTypes.string.isRequired,
-            thumbnail: PropTypes.string.isRequired,
-        }),
+        medias: PropTypes.arrayOf(
+            PropTypes.shape({
+                title: PropTypes.string.isRequired,
+                thumbnail: PropTypes.string.isRequired,
+            }),
+        ),
     }),
 };
 

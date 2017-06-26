@@ -7,7 +7,7 @@ import './styles.css';
 const defaultData = {
     loading: true,
     error: null,
-    Users: [],
+    medias: [],
 };
 
 const MediaList = ({ data = defaultData }) => {
@@ -44,7 +44,7 @@ MediaList.propTypes = {
     data: PropTypes.shape({
         loading: PropTypes.bool,
         error: PropTypes.string,
-        Users: PropTypes.shape({
+        medias: PropTypes.shape({
             title: PropTypes.string.isRequired,
             thumbnail: PropTypes.string.isRequired,
         }),

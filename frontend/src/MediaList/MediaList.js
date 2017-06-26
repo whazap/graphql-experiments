@@ -12,7 +12,6 @@ const MediaList = ({ data }) => {
     }
 
     if (data.error) {
-        console.log(data.error);
         return (
             <div>An unexpected error occurred</div>
         );
@@ -20,7 +19,7 @@ const MediaList = ({ data }) => {
 
     return (
         <ul className="media-list">
-            {data.medias.map((user, i) => console.log('user', user) || (
+            {data.medias.map((user, i) => (
                 <li
                     key={i}
                     className="media-list__item"

@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom';
 import { ApolloClient, createNetworkInterface, ApolloProvider } from 'react-apollo';
 import 'normalize.css/normalize.css';
 import App from './App';
-import registerServiceWorker from './registerServiceWorker';
 import './index.css';
 
 const client = new ApolloClient({
@@ -19,5 +18,3 @@ ReactDOM.render(
     </ApolloProvider>,
     document.getElementById('root'),
 );
-
-registerServiceWorker();

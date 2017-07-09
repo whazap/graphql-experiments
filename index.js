@@ -3,14 +3,12 @@ const express = require('express');
 const cors = require('cors');
 const graphqlHTTP = require('express-graphql');
 const {
-    graphql,
     GraphQLSchema,
     GraphQLObjectType,
     GraphQLString,
     GraphQLInt,
     GraphQLList,
 } = require('graphql');
-const uuid = require('node-uuid');
 const fetch = require('node-fetch');
 
 const PORT = process.env.PORT || 3001;
@@ -72,6 +70,6 @@ server.use('/graphql', graphqlHTTP({
     graphiql: true,
 }));
 
-server.listen(PORT, function () {
+server.listen(PORT, () => {
     console.log(`Listening on http://localhost:${PORT}`);
 });

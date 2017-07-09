@@ -2,7 +2,6 @@
 import React from 'react';
 import { gql, graphql } from 'react-apollo';
 import MediaList from './MediaList';
-import './App.css';
 
 const MediaListWithData = graphql(gql`
     query($limit: Int) {
@@ -20,8 +19,8 @@ const MediaListWithData = graphql(gql`
     }),
 })(MediaList);
 
-const App = () => (
-    <div className="App">
+const AppComponent = () => (
+    <div>
         <MediaListWithData limit="1" />
         <MediaListWithData limit="2" />
         <MediaListWithData limit="3" />
@@ -29,4 +28,4 @@ const App = () => (
     </div>
 );
 
-export default App;
+export default AppComponent;

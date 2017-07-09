@@ -1,10 +1,23 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import MediaItem from './MediaItem';
-import './styles.css';
 
-const MediaList = ({ data }) => {
+const MediaList = styled.ul`
+    display: block;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+`;
+
+const MediaListItem = styled.li`
+    display: inline-block;
+    padding: 0 20px 20px 0;
+    width: 25%;
+`;
+
+const MediaListComponent = ({ data }) => {
     if (data.loading) {
         return (
             <div>Loading</div>
@@ -18,22 +31,21 @@ const MediaList = ({ data }) => {
     }
 
     return (
-        <ul className="media-list">
+        <MediaList>
             {data.medias.map(user => (
-                <li
+                <MediaListItem
                     key={user.id}
-                    className="media-list__item"
                 >
                     <MediaItem
                         title={user.title}
                         thumbnail={`https://edge.sf.hitbox.tv${user.thumbnail}`}
                     />
-                </li>
+                </MediaListItem>
             ))}
-        </ul>
+        </MediaList>
     );
 };
-MediaList.propTypes = {
+MediaListComponent.propTypes = {
     data: PropTypes.shape({
         loading: PropTypes.bool,
         error: PropTypes.instanceOf(Error),
@@ -45,7 +57,7 @@ MediaList.propTypes = {
         ),
     }),
 };
-MediaList.defaultProps = {
+MediaListComponent.defaultProps = {
     data: {
         loading: true,
         error: null,
@@ -53,4 +65,4 @@ MediaList.defaultProps = {
     },
 };
 
-export default MediaList;
+export default MediaListComponent;

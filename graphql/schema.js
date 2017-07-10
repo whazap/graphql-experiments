@@ -1,7 +1,4 @@
 
-const express = require('express');
-const cors = require('cors');
-const graphqlHTTP = require('express-graphql');
 const {
     GraphQLSchema,
     GraphQLObjectType,
@@ -9,10 +6,7 @@ const {
     GraphQLInt,
     GraphQLList,
 } = require('graphql');
-const fetch = require('node-fetch');
-
-const PORT = process.env.PORT || 3001;
-const server = express();
+const fetch = require('isomorphic-fetch');
 
 const getMedias = (limit = 10) =>
     fetch(`https://www.smashcast.tv/api/media/live/list?fast=true&limit=${limit}`)
@@ -64,12 +58,4 @@ const schema = new GraphQLSchema({
     }),
 });
 
-server.use('/graphql', cors());
-server.use('/graphql', graphqlHTTP({
-    schema,
-    graphiql: true,
-}));
-
-server.listen(PORT, () => {
-    console.log(`Listening on http://localhost:${PORT}`);
-});
+module.exports = schema;

@@ -32,6 +32,10 @@ const Media = new GraphQLObjectType({
             type: GraphQLString,
             resolve: media => media.media_thumbnail,
         },
+        viewers: {
+            type: GraphQLInt,
+            resolve: media => media.media_views,
+        },
     }),
 });
 

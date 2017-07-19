@@ -32,13 +32,15 @@ const MediaListComponent = ({ data }) => {
 
     return (
         <MediaList>
-            {data.medias.map(user => (
+            {data.medias.map(media => (
                 <MediaListItem
-                    key={user.id}
+                    key={media.id}
                 >
                     <MediaItem
-                        title={user.title}
-                        thumbnail={`https://edge.sf.hitbox.tv${user.thumbnail}`}
+                        name={media.name}
+                        title={media.title}
+                        thumbnail={`https://edge.sf.hitbox.tv${media.thumbnail}`}
+                        viewers={media.viewers}
                     />
                 </MediaListItem>
             ))}

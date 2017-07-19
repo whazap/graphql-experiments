@@ -3,25 +3,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const MediaItem = styled.div`
-    position: relative;
-    padding-top: 56.25%;
-    background-color: gray;
-    color: #fff;
-    overflow: hidden;
-`;
-
-const MediaItemTitle = styled.h1`
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    font-size: 16px;
-    text-align: center;
-    font-weight: normal;
-    z-index: 2;
-`;
-
 const MediaItemImage = styled.img
     .attrs({
         alt: props => props.alt,
@@ -35,6 +16,7 @@ const MediaItemImage = styled.img
         height: 100%;
         max-width: 100%;
         max-height: 100%;
+        transition: opacity .35s;
     `;
 MediaItemImage.propTypes = {
     src: PropTypes.string.isRequired,
@@ -44,19 +26,95 @@ MediaItemImage.defaultProps = {
     alt: '',
 };
 
-const MediaItemComponent = ({ title, thumbnail }) => (
-    <MediaItem>
+const MediaItem = styled.a
+    .attrs({
+        href: props => `https://www.smashcast.tv/${props.url}`,
+        target: '_blank',
+    })`
+        position: relative;
+        display: block;
+        padding-top: 56.25%;
+        background-color: gray;
+        color: #fff;
+        overflow: hidden;
+
+        &:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            top: 0;
+            background: linear-gradient(195deg, transparent 50%, rgba(0, 0, 0, .9) 90%);
+            z-index: 2;
+        }
+
+        &:hover ${MediaItemImage} {
+            opacity: .8;
+        }
+    `;
+MediaItem.propTypes = {
+    url: PropTypes.string.isRequired,
+};
+
+const MediaItemTitle = styled.h1`
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0 16px 12px;
+    font-size: 16px;
+    font-weight: normal;
+    z-index: 4;
+`;
+
+const MediaItemViewerCount = styled.p`
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 5px 9px;
+    font-size: 12px;
+    white-space: nowrap;
+    background: rgba(0, 0, 0, .6);
+    color: #eb5055;
+    font-weight: 600;
+    z-index: 10;
+
+    &:before {
+        content: '';
+        display: inline-block;
+        height: 5px;
+        width: 5px;
+        margin-right: 5px;
+        border-radius: 5px;
+        background: #eb5055;
+    }
+`;
+
+const MediaItemComponent = ({ name, title, thumbnail, viewers }) => (
+    <MediaItem
+        url={name}
+    >
         <MediaItemTitle>
             {title}
         </MediaItemTitle>
         <MediaItemImage
             src={thumbnail}
         />
+        <MediaItemViewerCount>
+            {viewers}
+        </MediaItemViewerCount>
     </MediaItem>
 );
 MediaItemComponent.propTypes = {
+    name: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     thumbnail: PropTypes.string.isRequired,
+    viewers: PropTypes.number,
+};
+MediaItemComponent.defaultProps = {
+    viewers: 0,
 };
 
 export default MediaItemComponent;

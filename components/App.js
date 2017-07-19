@@ -7,8 +7,10 @@ const MediaListWithData = graphql(gql`
     query($limit: Int) {
         medias(limit: $limit) {
             id
+            name
             title:status
             thumbnail
+            viewers
         }
     }
 `, {

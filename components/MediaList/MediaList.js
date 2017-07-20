@@ -1,21 +1,8 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import MediaItem from './MediaItem';
-
-const MediaList = styled.ul`
-    display: block;
-    margin: 0;
-    padding: 0;
-    text-align: left;
-`;
-
-const MediaListItem = styled.li`
-    display: inline-block;
-    padding: 0 20px 20px 0;
-    width: 25%;
-`;
+import { MediaList, MediaListItem } from './styles';
 
 const MediaListComponent = ({ data }) => {
     if (data.loading) {

@@ -1,8 +1,11 @@
 
 const express = require('express');
 const next = require('next');
-const cors = require('cors');
-const graphqlHTTP = require('express-graphql');
+const bodyParser = require('body-parser');
+const {
+    graphqlExpress,
+    graphiqlExpress,
+} = require('apollo-server-express');
 const schema = require('./graphql/schema');
 
 const PORT = process.env.PORT || 3000;
@@ -16,15 +19,10 @@ app
     .then(() => {
         const server = express();
 
-        server.use('/graphql', cors());
-        server.use('/graphql', graphqlHTTP({
-            schema,
-            graphiql: true,
-        }));
+        server.use('/graphql', bodyParser.json(), graphqlExpress({ schema }));
+        server.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
 
-        server.get('*', (req, res) => {
-            return handle(req, res);
-        });
+        server.get('*', (req, res) => handle(req, res));
 
         server.listen(PORT, (err) => {
             if (err) {

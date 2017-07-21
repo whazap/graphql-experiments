@@ -12,10 +12,10 @@
   "author": "Sebastian Herber <herber@zaplab.at> (http://www.zaplab.at)",
   "license": "ISC",
   "dependencies": {
+    "apollo-server-express": "^1.0.2",
     "babel-plugin-styled-components": "^1.1.7",
-    "cors": "^2.8.3",
+    "body-parser": "^1.17.2",
     "express": "^4.15.3",
-    "express-graphql": "^0.6.6",
     "graphql": "^0.10.2",
     "isomorphic-fetch": "^2.2.1",
     "next": "^2.4.7",

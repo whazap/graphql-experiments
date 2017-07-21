@@ -11,6 +11,9 @@ const MediaListWithData = graphql(gql`
             title:status
             thumbnail
             viewers
+            language
+            game
+            gameSlug
         }
     }
 `, {

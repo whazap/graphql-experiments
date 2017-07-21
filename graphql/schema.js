@@ -36,6 +36,18 @@ const Media = new GraphQLObjectType({
             type: GraphQLInt,
             resolve: media => media.media_views,
         },
+        language: {
+            type: GraphQLString,
+            resolve: media => ((media.media_countries && media.media_countries.length) ? media.media_countries[0] : ''),
+        },
+        game: {
+            type: GraphQLString,
+            resolve: media => media.category_name,
+        },
+        gameSlug: {
+            type: GraphQLString,
+            resolve: media => media.category_seo_key,
+        },
     }),
 });
 

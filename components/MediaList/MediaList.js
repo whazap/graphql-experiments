@@ -28,6 +28,9 @@ const MediaListComponent = ({ data }) => {
                         title={media.title}
                         thumbnail={`https://edge.sf.hitbox.tv${media.thumbnail}`}
                         viewers={media.viewers}
+                        language={media.language}
+                        game={media.game}
+                        gameSlug={media.gameSlug}
                     />
                 </MediaListItem>
             ))}

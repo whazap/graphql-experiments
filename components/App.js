@@ -12,8 +12,10 @@ const MediaListWithData = graphql(gql`
             thumbnail
             viewers
             language
-            game
-            gameSlug
+            game {
+                name
+                slug
+            }
         }
     }
 `, {

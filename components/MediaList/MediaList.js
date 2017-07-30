@@ -29,8 +29,8 @@ const MediaListComponent = ({ data }) => {
                         thumbnail={`https://edge.sf.hitbox.tv${media.thumbnail}`}
                         viewers={media.viewers}
                         language={media.language}
-                        game={media.game}
-                        gameSlug={media.gameSlug}
+                        game={media.game.name}
+                        gameSlug={media.game.slug}
                     />
                 </MediaListItem>
             ))}
@@ -45,6 +45,12 @@ MediaListComponent.propTypes = {
             PropTypes.shape({
                 title: PropTypes.string.isRequired,
                 thumbnail: PropTypes.string.isRequired,
+                viewers: PropTypes.number.isRequired,
+                language: PropTypes.string,
+                game: PropTypes.shape({
+                    name: PropTypes.string.isRequired,
+                    slug: PropTypes.string.isRequired,
+                }),
             }),
         ),
     }),

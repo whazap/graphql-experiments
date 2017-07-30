@@ -1,20 +1,28 @@
-const {
 
+const {
+    GraphQLID,
     GraphQLObjectType,
     GraphQLString,
     GraphQLInt,
+    GraphQLNonNull,
 } = require('graphql');
+const Game = require('./game').default;
+
+const getMedia = name =>
+    fetch(`https://www.smashcast.tv/api/media/live/${name}`)
+        .then(resp => resp.json())
+        .then(json => json.livestream[0]);
 
 const Media = new GraphQLObjectType({
     name: 'Media',
     fields: () => ({
         id: {
-            type: GraphQLInt,
+            type: GraphQLID,
             resolve: media => media.media_id,
         },
         name: {
             type: GraphQLString,
-            resolve: media => media.media_name,
+            resolve: media => media.media_display_name,
         },
         status: {
             type: GraphQLString,
@@ -33,12 +41,8 @@ const Media = new GraphQLObjectType({
             resolve: media => ((media.media_countries && media.media_countries.length) ? media.media_countries[0] : ''),
         },
         game: {
-            type: GraphQLString,
-            resolve: media => media.category_name,
-        },
-        gameSlug: {
-            type: GraphQLString,
-            resolve: media => media.category_seo_key,
+            type: Game,
+            resolve: media => media,
         },
     }),
 });
@@ -46,6 +50,12 @@ const Media = new GraphQLObjectType({
 const field = {
     type: Media,
     description: 'media descr',
+    args: {
+        name: {
+            type: new GraphQLNonNull(GraphQLString),
+        },
+    },
+    resolve: (_, args) => getMedia(args.name),
 };
 
 module.exports = {

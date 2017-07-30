@@ -7,7 +7,7 @@ const fetch = require('isomorphic-fetch');
 const Media = require('./media').default;
 
 const getMedias = (limit = 10) =>
-    fetch(`https://www.smashcast.tv/api/media/live/list?fast=true&limit=${limit}`)
+    fetch(`https://www.smashcast.tv/api/media/live/list?limit=${limit}`)
         .then(resp => resp.json())
         .then(json => json.livestream);
 

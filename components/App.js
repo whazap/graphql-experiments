@@ -1,9 +1,28 @@
 
 import React from 'react';
+import { pure, branch, renderComponent, compose, flattenProp } from 'recompose';
 import { gql, graphql } from 'react-apollo';
 import MediaList from './MediaList';
 
-const MediaListWithData = graphql(gql`
+const Loading = () => (
+    <div>Loading</div>
+);
+
+const Error = () => (
+    <div>An unexpected error occurred</div>
+);
+
+const displayLoadingState = branch(
+    props => props.data.loading,
+    renderComponent(Loading),
+);
+
+const displayErrorState = branch(
+    props => props.data.error,
+    renderComponent(Error),
+);
+
+const data = graphql(gql`
     query($limit: Int) {
         medias(limit: $limit) {
             id
@@ -24,7 +43,15 @@ const MediaListWithData = graphql(gql`
             limit: props.limit,
         },
     }),
-})(MediaList);
+});
+
+const MediaListWithData = compose(
+    data,
+    displayLoadingState,
+    displayErrorState,
+    flattenProp('data'),
+    pure,
+)(MediaList);
 
 const AppComponent = () => (
     <div>

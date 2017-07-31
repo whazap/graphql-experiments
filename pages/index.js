@@ -1,6 +1,6 @@
 
 import React from 'react';
-import App from '../components/App';
+import App from '../containers/App';
 import withData from '../lib/withData';
 
 export default withData(() => (

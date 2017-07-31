@@ -2,7 +2,7 @@
 import React from 'react';
 import { pure, branch, renderComponent, compose, flattenProp } from 'recompose';
 import { gql, graphql } from 'react-apollo';
-import MediaList from './MediaList';
+import MediaList from '../components/MediaList';
 
 const Loading = () => (
     <div>Loading</div>

@@ -32,6 +32,7 @@ export default class MyDocument extends Document {
             <html lang="en">
                 <Head>
                     <title>Next/Graphql/Apollo/StyledComponents Experiment</title>
+                    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
                     {styleTags}
                 </Head>
                 <body>

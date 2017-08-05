@@ -2,8 +2,9 @@
 import styled from 'styled-components';
 
 export const MediaList = styled.ul`
+    --columns: 1;
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(var(--columns), 1fr);
     grid-column-gap: 20px;
     grid-row-gap: 20px;
     margin: 0 0 20px;
@@ -12,15 +13,15 @@ export const MediaList = styled.ul`
     text-align: left;
 
     @media (min-width: 480px) {
-        grid-template-columns: 1fr 1fr;
+        --columns: 2;
     }
 
     @media (min-width: 768px) {
-        grid-template-columns: 1fr 1fr 1fr;
+        --columns: 3;
     }
 
     @media (min-width: 960px) {
-        grid-template-columns: 1fr 1fr 1fr 1fr;
+        --columns: 4;
     }
 `;
 

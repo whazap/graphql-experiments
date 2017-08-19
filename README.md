@@ -1,41 +1,47 @@
 
 Just some personal experiments with graphql and react-apollo
 
-Structured with basic git tags
+# Install
+```
+npm install
+```
+or
+```
+yarn
+```
+
+# Start the dev server
+```
+npm run dev
+```
+
+## app
+
+http://localhost:3000
+
+## graphiQL
+
+http://localhost:3000/graphiql
+
+-----
+
+at first i build this project to learn graphql and show it at work,
+following this great egghead tutorial:
+
+> https://egghead.io/courses/build-a-graphql-server
+
+Structured with basic git tags to show the evolution
 ```
 git tag
 
 git checkout 1
 ```
-the first 13 steps are basically following:
+the first 13 steps/atgs are following the egghead tutorial (not very strictly ;))
 
-https://egghead.io/courses/build-a-graphql-server
+-----
 
-------
+later on i just kept using this project to practice nextjs (for server side rendering), styled-components, and some other stuff
 
-## Install the "backend" graphql server:
-```
-npm install / yarn
-```
 
-and for the frontend:
 
-```
-cd ./frontend
-npm install / yarn
-```
 
-## Start the graphql server:
-```
-node index.js
-```
-
-http://localhost:3001/graphql
-
-## Start the frontend app:
-
-```
-cd ./frontend
-npm start / yarn start
-```
-http://localhost:3000
